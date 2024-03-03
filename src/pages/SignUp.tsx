@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-function Login() {
+function SignUp() {
   return (
     <Card className="w-[400px] ">
       <CardHeader>
@@ -52,10 +52,9 @@ function Login() {
       </CardContent>
       <CardFooter>
         <Button className="w-full"> Log in </Button>
-        <Button className="w-full">Sign Up</Button>
       </CardFooter>
     </Card>
   );
 }
 
-export default Login;
+export default SignUp;
