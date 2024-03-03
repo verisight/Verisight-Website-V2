@@ -1,15 +1,16 @@
-import { ThemeProvider } from "./components/ui/ThemeProvider";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="grid grid-cols-1 justify-content-center m-20">
-        <div className="flex items-center justify-center">
-          <Login />
-        </div>
-      </div>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />/
+      </Routes>
+    </BrowserRouter>
   );
 }
 
