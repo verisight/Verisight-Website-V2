@@ -30,6 +30,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Icons } from "@/components/icons";
+import React from "react";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -46,6 +48,8 @@ const FormSchema = z.object({
   }),
 });
 
+const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
 function SignUp() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -57,8 +61,17 @@ function SignUp() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(
+    data: z.infer<typeof FormSchema>,
+    event: React.SyntheticEvent
+  ) {
     // Handle form submission here
+    event.preventDefault();
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
     console.log(data);
   }
 
@@ -175,6 +188,19 @@ function SignUp() {
                       >
                         Login
                       </Link>
+                      {/* Add Google Button  */}
+                      <Button
+                        variant="outline"
+                        type="button"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <Icons.google className="mr-2 h-4 w-4" />
+                        )}{" "}
+                        Google
+                      </Button>
                     </div>
                   </CardFooter>
                 </form>

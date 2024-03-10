@@ -13,7 +13,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-
+import { toast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -42,7 +42,16 @@ function Login() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  }
 
   return (
     <div className="grid grid-cols-1 justify-content-center m-20">
@@ -77,7 +86,7 @@ function Login() {
                         <FormItem>
                           <FormLabel>Username</FormLabel>
                           <FormControl>
-                            <Input type="text" {...field} />
+                            <Input placeholder="shadcn" {...field} />
                           </FormControl>
                           <FormDescription>
                             This is your public display name.
@@ -94,7 +103,7 @@ function Login() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <Input placeholder="shadcn" {...field} />
                           </FormControl>
                           <FormDescription>
                             This is your password.
