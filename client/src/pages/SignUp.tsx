@@ -1,7 +1,7 @@
 "use client";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button, buttonVariants } from "@/components/ui/button";
-
+import axios from "axios";
 import { cn } from "@/lib/utils";
 
 import {
@@ -61,12 +61,28 @@ function SignUp() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/users/signup",
+        data
+      );
 
-    setTimeout(() => {
+      console.log("Registration successful:", response.data);
+      window.location.href = "/login";
+
+      setIsLoading(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+      console.log(data);
+    } catch (error: any) {
+      console.error("Registration failed:", error.message);
+
       setIsLoading(false);
-    }, 3000);
-    console.log(data);
+    } finally {
+      console.log("Form data:", data);
+    }
   }
 
   return (

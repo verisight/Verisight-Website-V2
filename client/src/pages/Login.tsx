@@ -13,6 +13,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
+import axios from "axios"; //to send the data to the server
 
 import {
   Form,
@@ -42,7 +43,18 @@ function Login() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    const serverLoginURL = "http://localhost:3000/users/login";
+
+    axios
+      .post(serverLoginURL, data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the axios request:", error);
+      });
+  }
 
   return (
     <div className="grid grid-cols-1 justify-content-center m-20">
