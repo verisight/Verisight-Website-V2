@@ -77,7 +77,7 @@ function Login() {
                         <FormItem>
                           <FormLabel>Username</FormLabel>
                           <FormControl>
-                            <Input type="text" {...field} />
+                            <Input placeholder="shadcn" {...field} />
                           </FormControl>
                           <FormDescription>
                             This is your public display name.
@@ -94,7 +94,7 @@ function Login() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <Input placeholder="shadcn" {...field} />
                           </FormControl>
                           <FormDescription>
                             This is your password.

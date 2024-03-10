@@ -30,6 +30,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Icons } from "@/components/icons";
+import React from "react";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -47,6 +49,7 @@ const FormSchema = z.object({
 });
 
 function SignUp() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -57,8 +60,12 @@ function SignUp() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // Handle form submission here
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
     console.log(data);
   }
 
@@ -164,7 +171,14 @@ function SignUp() {
                   </CardContent>
 
                   <CardFooter className="flex flex-col space-y-2">
-                    <Button type="submit" className="w-full">
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                      ) : null}
                       Sign Up
                     </Button>
                     <div className="have account text">
@@ -175,6 +189,32 @@ function SignUp() {
                       >
                         Login
                       </Link>
+                      <div className="relative  space-y-8">
+                        <div className="absolute inset-0 flex items-center space-y-8">
+                          <span className="w-full border-t" />
+                        </div>
+
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-background px-2 text-muted-foreground">
+                            Or continue with
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex justify-center items-center ">
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="w-full"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            <Icons.google className="mr-2 h-4 w-4" />
+                          )}{" "}
+                          Google
+                        </Button>
+                      </div>
                     </div>
                   </CardFooter>
                 </form>
