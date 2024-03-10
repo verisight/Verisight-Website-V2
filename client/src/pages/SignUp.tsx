@@ -1,50 +1,188 @@
+"use client";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
-import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/ui/user-auth-form";
+import { Button, buttonVariants } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+//zod
+
 import { Link } from "react-router-dom";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const FormSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Invalid email address.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  designation: z.string().min(2, {
+    message: "Designation must be at least 2 characters.",
+  }),
+});
 
 function SignUp() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      designation: "",
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    // Handle form submission here
+    console.log(data);
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div className="container mx-auto flex-col items-center justify-center md:grid lg:max-w-none">
-          <Link
-            to="/login"
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "absolute right-4 top-4 md:right-8 md:top-8"
-            )}
-          >
-            Login
-          </Link>
-          <div className="lg:p-8 flex items-center justify-center">
-            <div className="flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-              <div className="flex flex-col space-y-2 text-center">
-                <h1 className="text-2xl font-semibold tracking-tight">
-                  <div className="flex items-center justify-center">
-                    <img
-                      src="src/assets/Verisightlogo.png"
-                      alt="Verisight logo"
-                      className="w-20 h-20"
-                      align-items="center"
+    <div className="grid grid-cols-1 justify-content-center m-20">
+      <div className="flex items-center justify-center">
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <div className="container mx-auto flex-col items-center justify-center md:grid lg:max-w-none">
+            <Link
+              to="/login"
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "absolute right-4 top-4 md:right-8 md:top-8"
+              )}
+            >
+              Login
+            </Link>
+
+            <Card className="w-[400px]">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-full space-y-6"
+                >
+                  <CardHeader>
+                    <CardTitle className="text-center mb-4">
+                      <div className="flex items-center justify-center">
+                        <img
+                          src="src/assets/Verisightlogo.png"
+                          alt="Verisight logo"
+                          className="w-20 h-20"
+                        />
+                      </div>
+                      <div>Sign Up</div>
+                    </CardTitle>
+                    <CardDescription></CardDescription>
+                  </CardHeader>
+
+                  <CardContent>
+                    <div className="grid w-full gap-4">
+                      <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                              <Input type="text" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              This is your public display name.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input type="email" {...field} />
+                            </FormControl>
+                            <FormDescription></FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                              <Input type="password" {...field} />
+                            </FormControl>
+                            <FormDescription></FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="designation"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Designation</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormDescription>Enter designation</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  Create an account
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Enter your email below to create your account
-                </p>
-              </div>
-              <UserAuthForm />
-              <p className="px-8 text-center text-sm text-muted-foreground">
-                By clicking continue, you agree to our Terms of Service and
-                Privacy Policy
-              </p>
-            </div>
+                  </CardContent>
+
+                  <CardFooter className="flex flex-col space-y-2">
+                    <Button type="submit" className="w-full">
+                      Sign Up
+                    </Button>
+                    <div className="have account text">
+                      Already have an account?{" "}
+                      <Link
+                        to="/login"
+                        className="text-white hover:text-blue-800"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  </CardFooter>
+                </form>
+              </Form>
+            </Card>
           </div>
-        </div>
-      </ThemeProvider>
+        </ThemeProvider>
+      </div>
     </div>
   );
 }
