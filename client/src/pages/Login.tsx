@@ -47,7 +47,9 @@ function Login() {
     const serverLoginURL = "http://localhost:3000/users/login";
 
     axios
-      .post(serverLoginURL, data)
+      .post(serverLoginURL, data, {
+        withCredentials: true, // Include credentials in the request
+      })
       .then((response) => {
         console.log(response.data);
       })
