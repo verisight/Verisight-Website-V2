@@ -3,7 +3,8 @@ import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button, buttonVariants } from "@/components/ui/button";
 import axios from "axios";
 import { cn } from "@/lib/utils";
-
+import { GoogleLogin } from "@react-oauth/google";
+//import { useStore } from "@/hooks/useStrore";
 import {
   Card,
   CardContent,
@@ -84,6 +85,9 @@ function SignUp() {
       console.log("Form data:", data);
     }
   }
+  //use store hook
+
+  // const setAuthData = useStore((state) => state.setAuthData);
 
   return (
     <div className="grid grid-cols-1 justify-content-center m-20">
@@ -217,19 +221,21 @@ function SignUp() {
                         </div>
                       </div>
                       <div className="flex justify-center items-center ">
-                        <Button
-                          type="submit"
-                          variant="outline"
-                          className="w-full"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? (
-                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                          ) : (
-                            <Icons.google className="mr-2 h-4 w-4" />
-                          )}{" "}
-                          Google
-                        </Button>
+                        {/*google AUTH*/}
+                        <GoogleLogin
+                          onSuccess={async (credentialResponse) => {
+                            console.log(credentialResponse);
+                            const response = await axios.post(
+                              "http://localhost:3000/users/signup"
+                            );
+
+                            const data = response.data;
+                            localStorage.setItem("authData", data);
+                          }}
+                          onError={() => {
+                            console.log("Login Failed");
+                          }}
+                        />
                       </div>
                     </div>
                   </CardFooter>
