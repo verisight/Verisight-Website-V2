@@ -52,6 +52,10 @@ function Login() {
       })
       .then((response) => {
         console.log(response.data);
+        //Redirect to complete page
+        if (response.data.message === "User logged in") {
+          window.location.href = "/complete";
+        }
       })
       .catch((error) => {
         console.error("There was a problem with the axios request:", error);
