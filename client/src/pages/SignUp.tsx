@@ -31,6 +31,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Icons } from "@/components/icons";
 import React from "react";
 
@@ -94,16 +95,6 @@ function SignUp() {
       <div className="flex items-center justify-center">
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <div className="container mx-auto flex-col items-center justify-center md:grid lg:max-w-none">
-            <Link
-              to="/login"
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "absolute right-4 top-4 md:right-8 md:top-8"
-              )}
-            >
-              Login
-            </Link>
-
             <Card className="w-[400px]">
               <Form {...form}>
                 <form
@@ -111,15 +102,15 @@ function SignUp() {
                   className="w-full space-y-6"
                 >
                   <CardHeader>
+                    <div className="flex items-center justify-center">
+                      <img
+                        src="src/assets/Verisightlogo.png"
+                        alt="Verisight logo"
+                        className="w-20 h-20"
+                      />
+                    </div>
                     <CardTitle className="text-center mb-4">
-                      <div className="flex items-center justify-center">
-                        <img
-                          src="src/assets/Verisightlogo.png"
-                          alt="Verisight logo"
-                          className="w-20 h-20"
-                        />
-                      </div>
-                      <div>Sign Up</div>
+                      <div className="text-xl">Sign Up</div>
                     </CardTitle>
                     <CardDescription></CardDescription>
                   </CardHeader>
@@ -135,9 +126,6 @@ function SignUp() {
                             <FormControl>
                               <Input type="text" {...field} />
                             </FormControl>
-                            <FormDescription>
-                              This is your public display name.
-                            </FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -183,14 +171,21 @@ function SignUp() {
                           <FormControl>
                             <Input type="text" {...field} />
                           </FormControl>
-                          <FormDescription>Enter designation</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </CardContent>
-
-                  <CardFooter className="flex flex-col space-y-2">
+                  <div className="flex items-center px-6 space-x-2">
+                    <Checkbox id="terms" />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Accept terms and conditions
+                    </label>
+                  </div>
+                  <CardFooter className="flex flex-col space-y-4">
                     <Button
                       type="submit"
                       className="w-full"
@@ -201,7 +196,7 @@ function SignUp() {
                       ) : null}
                       Sign Up
                     </Button>
-                    <div className="have account text">
+                    <div className="have account text text-sm">
                       Already have an account?{" "}
                       <Link
                         to="/login"
@@ -209,34 +204,34 @@ function SignUp() {
                       >
                         Login
                       </Link>
-                      <div className="relative  space-y-8">
-                        <div className="absolute inset-0 flex items-center space-y-8">
-                          <span className="w-full border-t" />
-                        </div>
-
-                        <div className="relative flex justify-center text-xs uppercase">
-                          <span className="bg-background px-2 text-muted-foreground">
-                            Or continue with
-                          </span>
-                        </div>
+                    </div>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t" />
                       </div>
-                      <div className="flex justify-center items-center ">
-                        {/*google AUTH*/}
-                        <GoogleLogin
-                          onSuccess={async (credentialResponse) => {
-                            console.log(credentialResponse);
-                            const response = await axios.post(
-                              "http://localhost:3000/users/signup"
-                            );
 
-                            const data = response.data;
-                            localStorage.setItem("authData", data);
-                          }}
-                          onError={() => {
-                            console.log("Login Failed");
-                          }}
-                        />
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">
+                          Or continue with
+                        </span>
                       </div>
+                    </div>
+                    <div className="flex justify-center items-center ">
+                      {/*google AUTH*/}
+                      <GoogleLogin
+                        onSuccess={async (credentialResponse) => {
+                          console.log(credentialResponse);
+                          const response = await axios.post(
+                            "http://localhost:3000/users/signup"
+                          );
+
+                          const data = response.data;
+                          localStorage.setItem("authData", data);
+                        }}
+                        onError={() => {
+                          console.log("Login Failed");
+                        }}
+                      />
                     </div>
                   </CardFooter>
                 </form>
