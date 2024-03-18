@@ -1,8 +1,7 @@
 "use client";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { cn } from "@/lib/utils";
 import { GoogleLogin } from "@react-oauth/google";
 //import { useStore } from "@/hooks/useStrore";
 import {
