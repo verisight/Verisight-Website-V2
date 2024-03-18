@@ -3,7 +3,7 @@ import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button, buttonVariants } from "@/components/ui/button";
 import axios from "axios";
 import { cn } from "@/lib/utils";
-import { GoogleLogin } from "@react-oauth/google";
+
 //import { useStore } from "@/hooks/useStrore";
 import {
   Card,
@@ -33,6 +33,8 @@ import {
 } from "@/components/ui/form";
 import { Icons } from "@/components/icons";
 import React from "react";
+
+import GoogleAuth from "@/googleAuth/googleAuth";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -222,19 +224,10 @@ function SignUp() {
                       </div>
                       <div className="flex justify-center items-center ">
                         {/*google AUTH*/}
-                        <GoogleLogin
-                          onSuccess={async (credentialResponse) => {
-                            console.log(credentialResponse);
-                            const response = await axios.post(
-                              "http://localhost:3000/users/signup"
-                            );
-
-                            const data = response.data;
-                            localStorage.setItem("authData", data);
-                          }}
-                          onError={() => {
-                            console.log("Login Failed");
-                          }}
+                        <GoogleAuth
+                          clientId={
+                            "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
+                          }
                         />
                       </div>
                     </div>

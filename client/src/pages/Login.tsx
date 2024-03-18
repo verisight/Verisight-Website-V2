@@ -15,6 +15,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import axios from "axios"; //to send the data to the server
 
+import { useToast } from "@/components/ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -24,6 +26,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import GoogleAuth from "@/googleAuth/googleAuth";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -43,6 +46,8 @@ function Login() {
     },
   });
 
+  const { toast } = useToast();
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const serverLoginURL = "http://localhost:3000/users/login";
 
@@ -52,6 +57,16 @@ function Login() {
       })
       .then((response) => {
         console.log(response.data);
+
+        //password invalid
+        if (response.data === "Invalid password or username") {
+          toast({
+            variant: "destructive",
+            title: "Invalid password or username",
+            description: "Please Try again.",
+          }),
+            [];
+        }
       })
       .catch((error) => {
         console.error("There was a problem with the axios request:", error);
@@ -108,11 +123,13 @@ function Login() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input placeholder="shadcn" {...field} />
+                            <Input
+                              type="password"
+                              placeholder="Password"
+                              {...field}
+                            />
                           </FormControl>
-                          <FormDescription>
-                            This is your password.
-                          </FormDescription>
+                          <FormDescription></FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -132,6 +149,13 @@ function Login() {
                       {} Sign up
                     </Link>
                   </div>
+
+                  {/*google AUTH*/}
+                  <GoogleAuth
+                    clientId={
+                      "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
+                    }
+                  />
                 </CardFooter>
               </form>
             </Form>

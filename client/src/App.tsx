@@ -3,6 +3,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import { Toaster } from "./components/ui/toaster";
+
 //import { useStore } from "./hooks/useStrore";
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </GoogleOAuthProvider>
   );
 }
