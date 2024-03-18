@@ -20,7 +20,6 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -84,16 +83,16 @@ function Login() {
                 className="w-full space-y-6"
               >
                 <CardHeader>
-                  <CardTitle className="text-center mb-4">
-                    <div className="flex items-center justify-center">
-                      <img
-                        src="src/assets/Verisightlogo.png"
-                        alt="Verisight logo"
-                        className="w-20 h-20"
-                        align-items="center"
-                      />
-                    </div>
-                    <div>Login</div>
+                  <div className="flex items-center justify-center mb-1">
+                    <img
+                      src="src/assets/Verisightlogo.png"
+                      alt="Verisight logo"
+                      className="w-20 h-20"
+                      align-items="center"
+                    />
+                  </div>
+                  <CardTitle className="text-center">
+                    <div className="text-xl">Login</div>
                   </CardTitle>
                   <CardDescription></CardDescription>
                 </CardHeader>
@@ -106,11 +105,8 @@ function Login() {
                         <FormItem>
                           <FormLabel>Username</FormLabel>
                           <FormControl>
-                            <Input placeholder="shadcn" {...field} />
+                            <Input {...field} />
                           </FormControl>
-                          <FormDescription>
-                            This is your public display name.
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -123,24 +119,19 @@ function Login() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input
-                              type="password"
-                              placeholder="Password"
-                              {...field}
-                            />
+                            <Input type="password" {...field} />
                           </FormControl>
-                          <FormDescription></FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
                 </CardContent>
-                <CardFooter className="flex flex-col space-y-2">
+                <CardFooter className="flex flex-col space-y-4">
                   <Button type="submit" className="w-full">
                     Login
                   </Button>
-                  <div className="have account text">
+                  <div className="have account text text-[14px]">
                     Don't have an account ?
                     <Link
                       to="/signup"

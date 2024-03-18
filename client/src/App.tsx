@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "./components/ui/toaster";
 
+import { Complete } from "./pages/Complete";
 //import { useStore } from "./hooks/useStrore";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/complete" element={<Complete />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
