@@ -112,7 +112,7 @@ function SignUp() {
                       />
                     </div>
                     <CardTitle className="text-center mb-4">
-                      <div className="text-xl">Sign Up</div>
+                      <div className="text-xl">Register</div>
                     </CardTitle>
                     <CardDescription></CardDescription>
                   </CardHeader>
@@ -207,7 +207,7 @@ function SignUp() {
                         Login
                       </Link>
                     </div>
-                    <div className="relative">
+                    <div className="relative space-y-3">
                       <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t" />
                       </div>
