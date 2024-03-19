@@ -23,6 +23,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import GoogleAuth from "@/googleAuth/googleAuth";
+import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -58,6 +60,12 @@ function Login() {
       })
       .catch((error) => {
         console.error("There was a problem with the axios request:", error);
+
+        toast({
+          title: "Invalid Credentials",
+          description: "Please check your username and password.",
+          variant: "destructive",
+        });
       });
   }
 
@@ -129,6 +137,19 @@ function Login() {
                       {} Sign up
                     </Link>
                   </div>
+
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or Login with
+                    </span>
+                  </div>
+
+                  {/*google AUTH*/}
+                  <GoogleAuth
+                    clientId={
+                      "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
+                    }
+                  />
                 </CardFooter>
               </form>
             </Form>
