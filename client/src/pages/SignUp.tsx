@@ -2,7 +2,7 @@
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
+
 //import { useStore } from "@/hooks/useStrore";
 import {
   Card,
@@ -65,6 +65,7 @@ function SignUp() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      console.log(data);
       const response = await axios.post(
         "http://localhost:3000/users/signup",
         data

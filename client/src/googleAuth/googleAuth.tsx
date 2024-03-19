@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+//import axios from "axios";
+import { useEffect } from "react";
 
 declare const google: any;
 
@@ -15,7 +15,7 @@ function googleAuth({ clientId }: GoogleSignInButtonProps) {
     console.log("Decoded JWT ID token: ", decoded);
 
     // Send the JWT token to your backend
-    axios
+    /* axios
       .post(
         "http://localhost:3000/users/",
         {},
@@ -39,7 +39,7 @@ function googleAuth({ clientId }: GoogleSignInButtonProps) {
           console.log("Error", error.message);
         }
         console.log(error.config);
-      });
+      });*/
   }
 
   useEffect(() => {
