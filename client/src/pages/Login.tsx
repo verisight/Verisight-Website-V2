@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import GoogleAuth from "@/googleAuth/googleAuth";
 import { toast } from "@/components/ui/use-toast";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -116,7 +117,7 @@ function Login() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <PasswordInput {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

@@ -38,6 +38,10 @@ import { Icons } from "@/components/icons";
 import GoogleAuth from "@/googleAuth/googleAuth";
 import { toast } from "@/components/ui/use-toast";
 
+//import icons
+import { MailIcon } from "lucide-react";
+import { PasswordInput } from "@/components/ui/passwordInput";
+
 const FormSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -54,6 +58,8 @@ const FormSchema = z.object({
 });
 
 function SignUp() {
+  //state variable for password toggle
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -192,7 +198,11 @@ function SignUp() {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input type="email" {...field} />
+                              <Input
+                                type="email"
+                                {...field}
+                                suffix={<MailIcon />}
+                              />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -207,7 +217,7 @@ function SignUp() {
                           <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                              <Input type="password" {...field} />
+                              <PasswordInput {...field} />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
