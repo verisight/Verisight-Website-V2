@@ -47,6 +47,10 @@ const FormSchema = z.object({
   designation: z.string().min(2, {
     message: "Designation must be at least 2 characters.",
   }),
+  terms: z.boolean().refine((value) => value, {
+    message: "You must accept the terms and conditions.",
+  }),
+
 });
 
 function SignUp() {
@@ -176,13 +180,21 @@ function SignUp() {
                     />
                   </CardContent>
                   <div className="flex items-center px-6 space-x-2">
-                    <Checkbox id="terms" />
-                    <label
-                      htmlFor="terms"
-                      className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Accept terms and conditions
-                    </label>
+                    <FormField
+                      control={form.control}
+                      name="terms"
+                      render={({ field }) => (
+                        <FormItem className="space-x-3">
+                          <FormControl>
+                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          </FormControl>
+                          <FormLabel>
+                            Accept terms and conditions
+                          </FormLabel>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                   <CardFooter className="flex flex-col space-y-4">
                     <Button
