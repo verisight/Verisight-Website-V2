@@ -2,7 +2,9 @@
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
+
+import React, { useEffect } from "react";
+
 //import { useStore } from "@/hooks/useStrore";
 import {
   Card,
@@ -32,7 +34,13 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Icons } from "@/components/icons";
-import React from "react";
+
+import GoogleAuth from "@/googleAuth/googleAuth";
+import { toast } from "@/components/ui/use-toast";
+
+//import icons
+import { MailIcon } from "lucide-react";
+import { PasswordInput } from "@/components/ui/passwordInput";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -50,6 +58,8 @@ const FormSchema = z.object({
 });
 
 function SignUp() {
+  //state variable for password toggle
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -60,6 +70,48 @@ function SignUp() {
       designation: "",
     },
   });
+
+  //return toast notifications when user enters username or email. if credential found will return already in use toast notification
+
+  const { watch } = form; //watch the field and if change occurs use effect triggered to check if username or email already exists
+  const values = watch(["username", "email"]);
+
+  useEffect(() => {
+    const [username, email] = values;
+    if (username) {
+      axios
+        .post("http://localhost:3000/users/check-username", { username })
+        .then((response) => {
+          if (response.data.exists) {
+            toast({
+              title: "Username already in use",
+              description: "Please use a different username.",
+              variant: "destructive",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to check username:", error.message);
+        });
+    }
+
+    if (email) {
+      axios
+        .post("http://localhost:3000/users/check-email", { email })
+        .then((response) => {
+          if (response.data.exists) {
+            toast({
+              title: "Email already in use",
+              description: "Please use a different email address.",
+              variant: "destructive",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to check email:", error.message);
+        });
+    }
+  }, [values]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
@@ -79,6 +131,15 @@ function SignUp() {
       console.log(data);
     } catch (error: any) {
       console.error("Registration failed:", error.message);
+
+      //invalid email address
+      /*if (error.response && error.response.status === 400) {
+        toast({
+          title: "Invalid email address",
+          description: "Please use a valid email address.",
+          variant: "destructive",
+        });
+      }*/
 
       setIsLoading(false);
     } finally {
@@ -137,7 +198,11 @@ function SignUp() {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input type="email" {...field} />
+                              <Input
+                                type="email"
+                                {...field}
+                                suffix={<MailIcon />}
+                              />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -152,7 +217,7 @@ function SignUp() {
                           <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                              <Input type="password" {...field} />
+                              <PasswordInput {...field} />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />
@@ -217,19 +282,11 @@ function SignUp() {
                     </div>
                     <div className="flex justify-center items-center ">
                       {/*google AUTH*/}
-                      <GoogleLogin
-                        onSuccess={async (credentialResponse) => {
-                          console.log(credentialResponse);
-                          const response = await axios.post(
-                            "http://localhost:3000/users/signup"
-                          );
 
-                          const data = response.data;
-                          localStorage.setItem("authData", data);
-                        }}
-                        onError={() => {
-                          console.log("Login Failed");
-                        }}
+                      <GoogleAuth
+                        clientId={
+                          "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
+                        }
                       />
                     </div>
                   </CardFooter>
