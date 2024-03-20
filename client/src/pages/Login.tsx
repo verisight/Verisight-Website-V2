@@ -13,7 +13,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import axios from "axios"; //to send the data to the server
 
 import { useToast } from "@/components/ui/use-toast";
 
@@ -50,26 +49,29 @@ function Login() {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const serverLoginURL = "https://api.verisightlabs.com/users/login";
 
-    
-    axios
-      .post(serverLoginURL, data, {
-        withCredentials: true, // Include credentials in the request
-      })
-      .then((response) => {
-        console.log(response.data);
 
-        //password invalid
-        if (response.data === "Invalid password or username") {
-          toast({
-            variant: "destructive",
-            title: "Invalid password or username",
-            description: "Please Try again.",
-          }),
-            [];
-        }
+    fetch(serverLoginURL, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+      console.log(response);
+
+      //password invalid
+      if (response.status === 401) {
+        toast({
+        variant: "destructive",
+        title: "Invalid password or username",
+        description: "Please Try again.",
+        });
+      }
       })
       .catch((error) => {
-        console.error("There was a problem with the axios request:", error);
+      console.error("There was a problem with the fetch request:", error);
       });
   }
 
