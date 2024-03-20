@@ -48,7 +48,7 @@ function Login() {
   const { toast } = useToast();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const serverLoginURL = "http://localhost:3000/users/login";
+    const serverLoginURL = "https://wp3ndw5h-3000.asse.devtunnels.ms/users/login";
 
     axios
       .post(serverLoginURL, data, {
