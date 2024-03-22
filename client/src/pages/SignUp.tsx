@@ -84,7 +84,7 @@ function SignUp() {
     const [username, email] = values;
     if (username) {
       axios
-        .post("http://localhost:3000/users/check-username", { username })
+        .post("https://api.verisightlabs.com/users/check-username", { username })
         .then((response) => {
           if (response.data.exists) {
             toast({
@@ -101,7 +101,7 @@ function SignUp() {
 
     if (email) {
       axios
-        .post("http://localhost:3000/users/check-email", { email })
+        .post("https://api.verisightlabs.com/users/check-email", { email })
         .then((response) => {
           if (response.data.exists) {
             toast({
@@ -120,7 +120,7 @@ function SignUp() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/signup",
+        "https://api.verisightlabs.com/users/signup",
         data
       );
 

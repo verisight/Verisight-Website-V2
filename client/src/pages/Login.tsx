@@ -46,7 +46,7 @@ function Login() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const serverLoginURL = "http://localhost:3000/users/login";
+    const serverLoginURL = "https://api.verisightlabs.com/users/login";
 
     axios
       .post(serverLoginURL, data, {
