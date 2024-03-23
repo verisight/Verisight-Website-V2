@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { z } from "zod";
+import { set, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,9 @@ import {
 
 import { toast } from "@/components/ui/use-toast";
 import { PasswordInput } from "@/components/ui/passwordInput";
+import { useState } from "react";
+
+import { LoadingSpinner } from "@/components/ui/loadingspinner";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -45,7 +48,10 @@ function Login() {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     const serverLoginURL = "https://api.verisightlabs.com/users/login";
 
     axios
@@ -53,6 +59,7 @@ function Login() {
         withCredentials: true, // Include credentials in the request
       })
       .then((response) => {
+        setLoading(false);
         console.log(response.data);
         //Redirect to complete page
         if (response.data.message === "User logged in") {
@@ -61,6 +68,7 @@ function Login() {
       })
       .catch((error) => {
         console.error("There was a problem with the axios request:", error);
+        setLoading(false);
 
         toast({
           title: "Invalid Credentials",
@@ -70,7 +78,9 @@ function Login() {
       });
   }
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="grid grid-cols-1 justify-content-center m-20">
       <div className="flex items-center justify-center">
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
