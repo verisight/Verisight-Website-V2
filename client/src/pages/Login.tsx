@@ -133,24 +133,15 @@ function Login() {
                     Don't have an account ?
                     <Link
                       to="/signup"
-                      className="text-white hover:text-blue-800"
+                      className="text-white hover:text-green-800"
                     >
                       {} Sign up
                     </Link>
                   </div>
 
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                      Or Login with
-                    </span>
+                    <span className="bg-background px-2 text-muted-foreground"></span>
                   </div>
-
-                  {/*google AUTH*/}
-                  <GoogleAuth
-                    clientId={
-                      "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
-                    }
-                  />
                 </CardFooter>
               </form>
             </Form>
