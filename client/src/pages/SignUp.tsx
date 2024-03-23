@@ -256,7 +256,14 @@ function SignUp() {
                               onCheckedChange={field.onChange}
                             />
                           </FormControl>
-                          <FormLabel>Accept terms and conditions</FormLabel>
+                          <FormLabel>
+                            <Link
+                              to="https://verisightlabs.com/privacy"
+                              className="text-white-500  hover:#022c22"
+                            >
+                              Accept terms and conditions
+                            </Link>
+                          </FormLabel>
                           <FormMessage />
                         </FormItem>
                       )}
