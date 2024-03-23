@@ -3,8 +3,6 @@ import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 
-import React, { useEffect } from "react";
-
 //import { useStore } from "@/hooks/useStrore";
 import {
   Card,
@@ -40,6 +38,7 @@ import { toast } from "@/components/ui/use-toast";
 //import icons
 import { MailIcon } from "lucide-react";
 import { PasswordInput } from "@/components/ui/passwordInput";
+import React from "react";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -74,9 +73,6 @@ function SignUp() {
   });
 
   //return toast notifications when user enters username or email. if credential found will return already in use toast notification
-
-  const { watch } = form; //watch the field and if change occurs use effect triggered to check if username or email already exists
-  const values = watch(["username", "email"]);
 
   /*useEffect(() => {
     const [username, email] = values;
