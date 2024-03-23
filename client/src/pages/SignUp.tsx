@@ -130,7 +130,9 @@ function SignUp() {
         description: "You will be directed to the login page.",
       });
 
-      window.location.href = "/login";
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 3000); // 4000 milliseconds = 3 seconds
 
       setIsLoading(true);
 
