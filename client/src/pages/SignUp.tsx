@@ -259,7 +259,7 @@ function SignUp() {
                           <FormLabel>
                             <Link
                               to="https://verisightlabs.com/privacy"
-                              className="text-white-500  hover:#022c22"
+                              className="text-white-500   hover:text-green-800"
                             >
                               Accept terms and conditions
                             </Link>
