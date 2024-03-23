@@ -78,7 +78,7 @@ function SignUp() {
   const { watch } = form; //watch the field and if change occurs use effect triggered to check if username or email already exists
   const values = watch(["username", "email"]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const [username, email] = values;
     if (username) {
       axios
@@ -115,10 +115,41 @@ function SignUp() {
           console.error("Failed to check email:", error.message);
         });
     }
-  }, [values]);
+  }, [values]);*/
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      const usernameExists = await axios.post(
+        "https://api.verisightlabs.com/users/check-username",
+        {
+          username: data.username,
+        }
+      );
+
+      if (usernameExists.data.exists) {
+        toast({
+          title: "Username already in use",
+          description: "Please use a different username.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const emailExists = await axios.post(
+        "https://api.verisightlabs.com/users/check-email",
+        {
+          email: data.email,
+        }
+      );
+
+      if (emailExists.data.exists) {
+        toast({
+          title: "Email already in use",
+          description: "Please use a different email address.",
+          variant: "destructive",
+        });
+        return;
+      }
       const response = await axios.post(
         "https://api.verisightlabs.com/users/signup",
         data
@@ -132,7 +163,7 @@ function SignUp() {
 
       setTimeout(() => {
         window.location.href = "/login";
-      }, 3000); // 4000 milliseconds = 3 seconds
+      }, 3000); // 3000 milliseconds = 3 seconds
 
       setIsLoading(true);
 
