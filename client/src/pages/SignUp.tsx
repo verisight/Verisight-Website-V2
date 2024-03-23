@@ -35,7 +35,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Icons } from "@/components/icons";
 
-import GoogleAuth from "@/googleAuth/googleAuth";
 import { toast } from "@/components/ui/use-toast";
 
 //import icons
@@ -58,7 +57,6 @@ const FormSchema = z.object({
   terms: z.boolean().refine((value) => value, {
     message: "You must accept the terms and conditions.",
   }),
-
 });
 
 function SignUp() {
@@ -84,7 +82,9 @@ function SignUp() {
     const [username, email] = values;
     if (username) {
       axios
-        .post("https://api.verisightlabs.com/users/check-username", { username })
+        .post("https://api.verisightlabs.com/users/check-username", {
+          username,
+        })
         .then((response) => {
           if (response.data.exists) {
             toast({
@@ -251,11 +251,12 @@ function SignUp() {
                       render={({ field }) => (
                         <FormItem className="space-x-3">
                           <FormControl>
-                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
                           </FormControl>
-                          <FormLabel>
-                            Accept terms and conditions
-                          </FormLabel>
+                          <FormLabel>Accept terms and conditions</FormLabel>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -276,7 +277,7 @@ function SignUp() {
                       Already have an account?{" "}
                       <Link
                         to="/login"
-                        className="text-white hover:text-blue-800"
+                        className="text-white hover:text-green-800"
                       >
                         Login
                       </Link>
@@ -285,22 +286,8 @@ function SignUp() {
                       <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t" />
                       </div>
-
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-background px-2 text-muted-foreground">
-                          Or continue with
-                        </span>
-                      </div>
                     </div>
-                    <div className="flex justify-center items-center ">
-                      {/*google AUTH*/}
-
-                      <GoogleAuth
-                        clientId={
-                          "1016920774662-93hbr50o5ocvu2k09fodt0m8pum26k0a.apps.googleusercontent.com"
-                        }
-                      />
-                    </div>
+                    <div className="flex justify-center items-center "></div>
                   </CardFooter>
                 </form>
               </Form>
