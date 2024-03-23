@@ -125,6 +125,11 @@ function SignUp() {
       );
 
       console.log("Registration successful:", response.data);
+      toast({
+        title: "Registered Successfully",
+        description: "You will be directed to the login page.",
+      });
+
       window.location.href = "/login";
 
       setIsLoading(true);
@@ -168,7 +173,7 @@ function SignUp() {
                   <CardHeader>
                     <div className="flex items-center justify-center">
                       <img
-                        src="src/assets/Verisightlogo.png"
+                        src="VerisightLogo.png"
                         alt="Verisight logo"
                         className="w-20 h-20"
                       />

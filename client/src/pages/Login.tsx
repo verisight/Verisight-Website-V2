@@ -93,7 +93,7 @@ function Login() {
                 <CardHeader>
                   <div className="flex items-center justify-center mb-1">
                     <img
-                      src="src/assets/Verisightlogo.png"
+                      src="VerisightLogo.png"
                       alt="Verisight logo"
                       className="w-20 h-20"
                       align-items="center"
