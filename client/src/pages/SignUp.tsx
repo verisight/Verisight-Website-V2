@@ -278,19 +278,19 @@ function SignUp() {
                       )}
                     />
                   </CardContent>
-                  <div className="flex items-center px-6 space-x-2">
+                  <div className="mx-6">
                     <FormField
                       control={form.control}
                       name="terms"
                       render={({ field }) => (
-                        <FormItem className="space-x-3">
+                        <FormItem className="flex flex-row space-x-3 space-y-0 p-2">
                           <FormControl>
                             <Checkbox
                               checked={field.value}
                               onCheckedChange={field.onChange}
                             />
                           </FormControl>
-                          <FormLabel>
+                          <FormLabel className=" mt-0 ">
                             <Link
                               to="https://verisightlabs.com/privacy"
                               className="text-white-500   hover:text-green-800"
